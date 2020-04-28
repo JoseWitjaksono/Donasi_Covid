@@ -40,9 +40,19 @@
                 <div class="col-6 col-md-5 col-xl-3 align-self-center">
                     <a href="#" class="logo"><img src="https://apps.telkomakses.co.id/portal/img/logo_ta2.png" alt="" style="width: 70%"></a>
                 </div>
-                <div class="col-6 col-md-7 col-xl-6 text-center align-self-center">
-                </div>
-                <div class="d-none d-lg-block col-lg-3 col-xl-3 align-self-center text-right">
+                <div class="col-9 col-md-10 col-xl-9 text-center align-self-center">
+                    <div class="main__menu">
+                        <div class="stellarnav light right desktop"><a href="http://quomodosoft.com/html/ncovid/#" class="menu-toggle"><span class="bars"><span></span><span></span><span></span></span> </a>
+                            <ul class="navclass" id="scroll"><a href="#" class="close-menu full"><span class="icon-close"></span>Close</a>
+                                <li class=""><img src="<?= $this->session->userdata("foto")?>" style="height: 55px; width: 55px; border-radius: 50%;"></li>
+                                <li class="has-sub current"><a href="#"><?= $this->session->userdata("nama")?></a>
+                                    <ul>
+                                        <li><a href="#">Logout</a></li>
+                                    </ul>
+                                    <a class="dd-toggle" href="#"><span class="icon-circle-arrow-right"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,7 +76,11 @@
 								?>
 								<a type="button" class="cbtn btn1" data-toggle="modal" data-target="#elegantModalForm">Donasi</a>
 								<?php
-							}
+							}else{
+							    ?>
+                                <a type="button" class="cbtn btn1" onclick="alreadyDonated()">Donasi</a>
+                                <?php
+                            }
 						?>
                     </div>
                 </div>
@@ -128,8 +142,16 @@
     <script src="<?php echo base_url(); ?>assets/js/jquery.counterup.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/wow.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script>
+        function alreadyDonated(){
+            Swal.fire(
+                'Terimakasih !',
+                'Sdr. <?= $this->session->userdata("nama")?>, anda sudah melakukan donasi sebesar Rp. <?= $jumlah_donasi; ?>',
+                'success'
+            )
+        }
 
 		function test(){
 			$('#elegantModalForm').modal('hide');
@@ -142,6 +164,9 @@
 				var finalValue = inputValue;
 			}
 
+            rawValue = finalValue.replace(/[^\d,-]/g, '');
+            rawValue = rawValue.replace(",", '.');
+
 			const swalWithBootstrapButtons = Swal.mixin({
 				customClass: {
 					confirmButton: 'btn btn-block btn-outline-success',
@@ -152,15 +177,15 @@
 
 				swalWithBootstrapButtons.fire({
 					title: 'Apakah anda sudah yakin?',
-					text: "Anda akan mendonasikan THR anda sebesar " + finalValue + ", Anda tidak bisa membatalkan setelah konfirmasi ini",
-					icon: 'warning',
+					text: "Sdr. <?= $this->session->userdata('nama')?>, Anda akan mendonasikan THR anda sebesar " + finalValue + " , Anda tidak bisa membatalkan setelah konfirmasi ini",
+					icon: 'question',
 					showCancelButton: true,
 					confirmButtonText: 'Ya, Saya setuju',
 					cancelButtonText: 'Tidak, Batalkan',
 					reverseButtons: true,
 					showLoaderOnConfirm: true,
 					preConfirm: (login) => {
-						return fetch(`<?= base_url()?>Donasi/form_submit/`+finalValue)
+						return fetch(`<?= base_url()?>Donasi/form_submit/`+rawValue)
 							.then(response => {
 								if (!response.ok) {
 									throw new Error(response.statusText)
@@ -199,6 +224,23 @@
             $("#jumlahLain").click(function(){
                 $("#gridRadios8").prop("checked", true);
             });
+
+        });
+
+        jQuery( document ).ready(function( $ ) {
+            // The options are...optional :)
+            const autoNumericOptionsEuro = {
+                currencySymbol :'Rp. ',
+                decimalPlaces:'0',
+                digitGroupSeparator        : '.',
+                decimalCharacter           : ',',
+                decimalCharacterAlternative: '.',
+            };
+
+            // Initialization
+            new AutoNumeric('#jumlahLain', autoNumericOptionsEuro);
+
+
         });
 	</script>
 
@@ -223,50 +265,50 @@
 							<div class="row">
 								<div class="col-sm-10">
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="50000" checked>
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="Rp. 50.000" checked>
 										<label class="form-check-label" for="gridRadios1">
 											Rp. 50.000
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="100000">
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="Rp. 100.000">
 										<label class="form-check-label" for="gridRadios2">
 											Rp. 100.000
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="250000" >
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="Rp. 250.000" >
 										<label class="form-check-label" for="gridRadios3">
 											Rp. 250.000
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="500000" >
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="Rp. 500.000" >
 										<label class="form-check-label" for="gridRadios4">
 											Rp. 500.000
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios5" value="1000000" >
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios5" value="Rp. 1.000.000" >
 										<label class="form-check-label" for="gridRadios5">
 											Rp. 1.000.000
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios6" value="2500000" >
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios6" value="Rp. 2.500.000" >
 										<label class="form-check-label" for="gridRadios6">
 											Rp. 2.500.000
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios7" value="5000000" >
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios7" value="Rp. 5.000.000" >
 										<label class="form-check-label" for="gridRadios7">
 											Rp. 5.000.000
 										</label>
 									</div>
 									<div class="form-check">
 										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios8" value="JUMLAHLAIN" >
-										<input type="number" name="jumlahLain" id="jumlahLain" class="form-control" placeholder="Jumlah Lain..">
+										<input type="text" name="jumlahLain" id="jumlahLain" class="form-control" placeholder="Jumlah Lain..">
 										<label class="form-check-label" for="gridRadios7">
 										</label>
 									</div>

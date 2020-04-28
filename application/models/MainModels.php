@@ -40,4 +40,17 @@ class Mainmodels extends CI_Model
 			return 'BELUM';
 		}
 	}
+
+    public function jumlahDonasi($nik)
+    {
+        $query = $this->db->query("SELECT * FROM donasi_covid WHERE nik = '20180115'");
+
+        $row = $query->row();
+
+        if (isset($row)){
+            return $row;
+        }else{
+            return FALSE;
+        }
+    }
 }

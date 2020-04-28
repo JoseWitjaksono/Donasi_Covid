@@ -12,7 +12,13 @@ class Donasi extends CI_Controller {
 	public function index()
 	{
 		if($this->session->userdata("login") == TRUE) {
-			$data['state'] = $this->mainmodels->checkState($this->session->userdata("nik"));
+            $jmlDonasi = $this->mainmodels->jumlahDonasi($this->session->userdata("nik"))->jumlah;
+            if(!empty($jmlDonasi)){
+                $jmlDonasi = number_format($jmlDonasi);
+            }
+            $data['state'] = $this->mainmodels->checkState($this->session->userdata("nik"));
+            $data['jumlah_donasi'] = $jmlDonasi;
+            $data['tanggal'] = $this->mainmodels->jumlahDonasi($this->session->userdata("nik"))->tanggal_transaksi;
 			$this->load->view('donasi', $data);
 		}else{
 			redirect('Donasi/login');
@@ -36,12 +42,15 @@ class Donasi extends CI_Controller {
 		$this->load->view('login_2');
 	}
 
+	public function logout(){
+        $this->session->sess_destroy();
+        redirect('Donasi/login');
+    }
+
 	public function login_sso()
 	{
 		$nik = $this->input->post("nik");
 		$password = $this->input->post("password");
-		var_dump($nik);
-		var_dump($password);
 
 		//STEP1
 		$post_data = http_build_query(
@@ -111,12 +120,13 @@ class Donasi extends CI_Controller {
 				$context3 = stream_context_create($opts3);
 				$result3 = file_get_contents('http://api.telkomakses.co.id/API/sso/auth_sso_post3.php', false, $context3);
 				$result3 = json_decode($result3, true);
-				var_dump($result3);
 
 				if ($result3['auth'] == "Yes") {
 
 						$data_session = array(
 							'nik' => $nik,
+							'nama' => $result3['nama'],
+                            'foto' => $result3['foto'],
 							'login' => TRUE
 						);
 
