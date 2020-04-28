@@ -194,6 +194,12 @@
 					}
 				})
 		}
+
+        $(document).ready(function(){
+            $("#jumlahLain").click(function(){
+                $("#gridRadios8").prop("checked", true);
+            });
+        });
 	</script>
 
 
@@ -217,7 +223,7 @@
 							<div class="row">
 								<div class="col-sm-10">
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="50000">
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="50000" checked>
 										<label class="form-check-label" for="gridRadios1">
 											Rp. 50.000
 										</label>
@@ -259,7 +265,7 @@
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios7" value="JUMLAHLAIN" >
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios8" value="JUMLAHLAIN" >
 										<input type="number" name="jumlahLain" id="jumlahLain" class="form-control" placeholder="Jumlah Lain..">
 										<label class="form-check-label" for="gridRadios7">
 										</label>

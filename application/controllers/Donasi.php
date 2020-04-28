@@ -33,7 +33,7 @@ class Donasi extends CI_Controller {
 	}
 
 	public function login(){
-		$this->load->view('login');
+		$this->load->view('login_2');
 	}
 
 	public function login_sso()
