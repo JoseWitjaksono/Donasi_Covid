@@ -42,12 +42,12 @@
                 </div>
                 <div class="col-9 col-md-10 col-xl-9 text-center align-self-center">
                     <div class="main__menu">
-                        <div class="stellarnav light right desktop"><a href="http://quomodosoft.com/html/ncovid/#" class="menu-toggle"><span class="bars"><span></span><span></span><span></span></span> </a>
+                        <div class="stellarnav light right desktop"><a href="#" class="menu-toggle"><span class="bars"><span></span><span></span><span></span></span> </a>
                             <ul class="navclass" id="scroll"><a href="#" class="close-menu full"><span class="icon-close"></span>Close</a>
                                 <li class=""><img src="<?= $this->session->userdata("foto")?>" style="height: 55px; width: 55px; border-radius: 50%;"></li>
                                 <li class="has-sub current"><a href="#"><?= $this->session->userdata("nama")?></a>
                                     <ul>
-                                        <li><a href="#">Logout</a></li>
+                                        <li><a href="<?= base_url() ?>Donasi/logout">Logout</a></li>
                                     </ul>
                                     <a class="dd-toggle" href="#"><span class="icon-circle-arrow-right"></span></a></li>
                             </ul>
