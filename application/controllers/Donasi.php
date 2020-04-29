@@ -12,13 +12,13 @@ class Donasi extends CI_Controller {
 	public function index()
 	{
 		if($this->session->userdata("login") == TRUE) {
-            $jmlDonasi = $this->mainmodels->jumlahDonasi($this->session->userdata("nik"))->jumlah;
-            if(!empty($jmlDonasi)){
+            $dataDonasi = $this->mainmodels->jumlahDonasi($this->session->userdata("nik"));
+            if(!empty($dataDonasi->jumlah)){
+                $jmlDonasi = $dataDonasi->jumlah;
                 $jmlDonasi = number_format($jmlDonasi);
+                $data['jumlah_donasi'] = $jmlDonasi;
             }
             $data['state'] = $this->mainmodels->checkState($this->session->userdata("nik"));
-            $data['jumlah_donasi'] = $jmlDonasi;
-            $data['tanggal'] = $this->mainmodels->jumlahDonasi($this->session->userdata("nik"))->tanggal_transaksi;
 			$this->load->view('donasi', $data);
 		}else{
 			redirect('Donasi/login');

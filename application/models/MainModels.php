@@ -43,7 +43,7 @@ class Mainmodels extends CI_Model
 
     public function jumlahDonasi($nik)
     {
-        $query = $this->db->query("SELECT * FROM donasi_covid WHERE nik = '20180115'");
+        $query = $this->db->query("SELECT * FROM donasi_covid WHERE nik = '$nik'");
 
         $row = $query->row();
 

@@ -148,7 +148,7 @@
         function alreadyDonated(){
             Swal.fire(
                 'Terimakasih !',
-                'Sdr. <?= $this->session->userdata("nama")?>, anda sudah melakukan donasi sebesar Rp. <?= $jumlah_donasi; ?>',
+                'Sdr. <?= $this->session->userdata("nama")?>, anda sudah melakukan donasi sebesar Rp. <?php if(!empty($jumlah_donasi)){echo $jumlah_donasi;} ?>',
                 'success'
             )
         }
@@ -235,6 +235,7 @@
                 digitGroupSeparator        : '.',
                 decimalCharacter           : ',',
                 decimalCharacterAlternative: '.',
+                minimumValue: "1"
             };
 
             // Initialization
