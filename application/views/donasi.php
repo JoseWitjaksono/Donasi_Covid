@@ -40,7 +40,7 @@
                 <div class="col-6 col-md-5 col-xl-3 align-self-center">
                     <a href="#" class="logo"><img src="https://apps.telkomakses.co.id/portal/img/logo_ta2.png" alt="" style="width: 70%"></a>
                 </div>
-                <div class="col-9 col-md-10 col-xl-9 text-center align-self-center">
+                <div class="col-9 col-md-10 col-xl-9 text-center align-self-center" id="profile_area">
                     <div class="main__menu">
                         <div class="stellarnav light right desktop"><a href="#" class="menu-toggle"><span class="bars"><span></span><span></span><span></span></span> </a>
                             <ul class="navclass" id="scroll"><a href="#" class="close-menu full"><span class="icon-close"></span>Close</a>
@@ -146,15 +146,22 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script>
         function alreadyDonated(){
+            $("#profile_area").toggle();
             Swal.fire(
                 'Terimakasih !',
-                'Sdr. <?= $this->session->userdata("nama")?>, anda sudah melakukan donasi sebesar Rp. <?php if(!empty($jumlah_donasi)){echo $jumlah_donasi;} ?>',
+                'Anda sudah melakukan donasi sebesar Rp. <?php if(!empty($jumlah_donasi)){echo $jumlah_donasi;} ?>',
                 'success'
-            )
+            ).then((result) => {
+                // Reload the Page
+                $("#profile_area").toggle();
+            });
         }
 
 		function test(){
 			$('#elegantModalForm').modal('hide');
+
+            $("#profile_area").toggle();
+
 			var radioValue = $("input[name='gridRadios']:checked").val();
 			var inputValue = $("#jumlahLain").val();
 			var finalValue;
@@ -177,7 +184,7 @@
 
 				swalWithBootstrapButtons.fire({
 					title: 'Apakah anda sudah yakin?',
-					text: "Sdr. <?= $this->session->userdata('nama')?>, Anda akan mendonasikan THR anda sebesar " + finalValue + " , Anda tidak bisa membatalkan setelah konfirmasi ini",
+					text: "Anda akan mendonasikan THR anda sebesar " + finalValue + " , Anda tidak bisa membatalkan setelah konfirmasi ini",
 					icon: 'question',
 					showCancelButton: true,
 					confirmButtonText: 'Ya, Saya setuju',
@@ -217,6 +224,7 @@
 							'error'
 						)
 					}
+                    $("#profile_area").toggle();
 				})
 		}
 
